@@ -18,13 +18,16 @@ const Login = () => {
     }
 
     try {
-      const response = await fetch("https://login-page-backend-i5bh.onrender.com/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
+      const response = await fetch(
+        "https://login-page-backend-i5bh.onrender.com/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        }
+      );
 
       const data = await response.json();
       console.log("Login response:", data);
@@ -81,8 +84,12 @@ const Login = () => {
       </form>
 
       <div className="input mb-3 d-flex pt-3">
-        <input className="form-check-input ms-2" type="checkbox" id="rememberMe" />
-        <p className =  "ms-3">Remember me</p>
+        <input
+          className="form-check-input ms-2"
+          type="checkbox"
+          id="rememberMe"
+        />
+        <p className="ms-3">Remember me</p>
       </div>
 
       <p className="text-center mt-5">
