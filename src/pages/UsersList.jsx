@@ -5,16 +5,16 @@ import Toolbar from "../components/Toolbar";
 const UsersList = () => {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState("");
-  const [checkBox, setCheckBox] = useState(true)
+  const [checkBox, setCheckBox] = useState(true);
 
   const toggleUsers = () => {
-    const checkBoxes = document.querySelectorAll("input[type=checkbox]")
+    const checkBoxes = document.querySelectorAll("input[type=checkbox]");
 
     checkBoxes.forEach((checkbox) => {
-      checkbox.checked = !checkBox
-      setCheckBox(!checkBox)
-    })
-  }
+      checkbox.checked = !checkBox;
+      setCheckBox(!checkBox);
+    });
+  };
 
   const navigate = useNavigate();
 
@@ -54,7 +54,7 @@ const UsersList = () => {
 
     const tooltipTriggerList = document.querySelectorAll(
       '[data-bs-toggle="tooltip"]'
-    )
+    );
 
     tooltipTriggerList.forEach((tooltipTriggerEl) => {
       new Tooltip(tooltipTriggerEl);
@@ -101,11 +101,7 @@ const UsersList = () => {
           <tr>
             <th scope="col">
               <button className="btn btn-primary" onClick={toggleUsers}>
-                {checkBox ? (
-                  <i className="bi bi-list-check"></i>
-                ) : (
-                  <i className="bi bi-arrow-bar-down"></i>
-                )}
+                <i className="bi bi-list-check"></i>
               </button>
             </th>
             <th scope="col">Name</th>
