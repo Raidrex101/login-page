@@ -94,7 +94,7 @@ const UsersList = () => {
                 className="btn btn-primary"
                 onClick={toggleUsers}
               >
-                {showUsers ? "Hide" : "Show"} Users
+                {showUsers ? "=" : "="}
               </button>
             </th>
             <th scope="col">Name</th>
