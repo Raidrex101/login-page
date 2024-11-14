@@ -1,0 +1,8 @@
+body {
+  height: 100%;
+  margin: 0;
+}
+
+.container {
+  min-height: 100vh; /* 100vh es el 100% de la altura de la ventana */
+}
