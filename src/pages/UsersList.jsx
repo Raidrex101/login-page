@@ -74,7 +74,7 @@ const UsersList = () => {
       new Tooltip(tooltipTriggerEl)
     })
 
-  }), [navigate]
+  }, [navigate])
 
   const getTimeElapsed = (lastLogin) => {
     if (!lastLogin) return "N/A"
