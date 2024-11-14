@@ -1,73 +1,83 @@
-import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
-import { Tooltip } from "bootstrap"
-import Toolbar from "../components/Toolbar"
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Tooltip } from "bootstrap";
+import Toolbar from "../components/Toolbar";
 const UsersList = () => {
-  const [users, setUsers] = useState([])
-  const [error, setError] = useState("")
-  const [showUsers, setShowUsers] = useState(true)
+  const [users, setUsers] = useState([]);
+  const [error, setError] = useState("");
+  const [checkBox, setCheckBox] = useState(true)
 
   const toggleUsers = () => {
-    setShowUsers((prev) => !prev)
+    const checkBoxes = document.querySelectorAll("input[type=checkbox]")
+
+    checkBoxes.forEach((checkbox) => {
+      checkbox.checked = !checkBox
+      setCheckBox(!checkBox)
+    })
   }
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const token = localStorage.getItem("token")
+      const token = localStorage.getItem("token");
       if (!token) {
-        navigate("/login")
-        return
+        navigate("/login");
+        return;
       }
 
       try {
-        const response = await fetch("https://login-page-backend-i5bh.onrender.com/users", {
-          method: "GET",
-          headers: {
-            "x-auth-token": token,
+        const response = await fetch(
+          "https://login-page-backend-i5bh.onrender.com/users",
+          {
+            method: "GET",
+            headers: {
+              "x-auth-token": token,
+            },
           }
-        })
+        );
 
         if (response.status === 200) {
-          const data = await response.json()
+          const data = await response.json();
 
-          data.sort((a, b) => a.name.localeCompare(b.name))
-          
-          setUsers(data)
+          data.sort((a, b) => a.name.localeCompare(b.name));
+
+          setUsers(data);
         } else {
-          setError("Error getting users")
+          setError("Error getting users");
         }
       } catch (error) {
-        setError("server error: " + error)
+        setError("server error: " + error);
       }
-    }
-      fetchUsers()
+    };
+    fetchUsers();
 
-      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-  tooltipTriggerList.forEach((tooltipTriggerEl) => {
-    new Tooltip(tooltipTriggerEl)
-  })
+    const tooltipTriggerList = document.querySelectorAll(
+      '[data-bs-toggle="tooltip"]'
+    )
 
-  }, [navigate])
+    tooltipTriggerList.forEach((tooltipTriggerEl) => {
+      new Tooltip(tooltipTriggerEl);
+    });
+  }, [navigate]);
 
   const getTimeElapsed = (lastLogin) => {
-    if (!lastLogin) return "N/A"
+    if (!lastLogin) return "N/A";
 
-    const lastLoginDate = new Date(lastLogin)
-    const now = new Date()
-    const timeDiff = now - lastLoginDate
+    const lastLoginDate = new Date(lastLogin);
+    const now = new Date();
+    const timeDiff = now - lastLoginDate;
 
-    const seconds = Math.floor(timeDiff / 1000)
-    const minutes = Math.floor(seconds / 60)
-    const hours = Math.floor(minutes / 60)
-    const days = Math.floor(hours / 24)
+    const seconds = Math.floor(timeDiff / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
 
-    if (days > 0) return `${days} day(s) ago`
-    if (hours > 0) return `${hours} hour(s) ago`
-    if (minutes > 0) return `${minutes} minute(s) ago`
-    return `Less than a minute ago`
-  }
+    if (days > 0) return `${days} day(s) ago`;
+    if (hours > 0) return `${hours} hour(s) ago`;
+    if (minutes > 0) return `${minutes} minute(s) ago`;
+    return `Less than a minute ago`;
+  };
 
   const formatDate = (dateString) => {
     const options = {
@@ -77,9 +87,9 @@ const UsersList = () => {
       hour: "numeric",
       minute: "numeric",
       second: "numeric",
-    }
-    return new Date(dateString).toLocaleString("en-US", options) 
-  }
+    };
+    return new Date(dateString).toLocaleString("en-US", options);
+  };
 
   return (
     <div className="container mt-5">
@@ -90,11 +100,12 @@ const UsersList = () => {
         <thead>
           <tr>
             <th scope="col">
-            <button
-                className="btn btn-primary"
-                onClick={toggleUsers}
-              >
-                {showUsers ? "=" : "="}
+              <button className="btn btn-primary" onClick={toggleUsers}>
+                {checkBox ? (
+                  <i className="bi bi-list-check"></i>
+                ) : (
+                  <i className="bi bi-arrow-bar-down"></i>
+                )}
               </button>
             </th>
             <th scope="col">Name</th>
@@ -103,7 +114,7 @@ const UsersList = () => {
             <th scope="col">Status</th>
           </tr>
         </thead>
-        {showUsers && (
+        {checkBox && (
           <tbody>
             {users.map((user) => (
               <tr key={user.id}>
